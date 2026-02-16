@@ -5,44 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Share Location</title>
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      padding: 20px; 
-      text-align: center; 
-    }
-    button { 
-      padding: 10px 20px; 
-      font-size: 16px; 
-      cursor: pointer; 
-    }
-    #status { 
-      margin-top: 15px; 
-      font-weight: bold; 
-    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; text-align: center; background-color: #f4f7f6; }
+    .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: inline-block; max-width: 400px; width: 100%; }
+    input { width: 80%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; }
+    button { padding: 12px 24px; font-size: 16px; cursor: pointer; background-color: #28a745; color: white; border: none; border-radius: 5px; transition: 0.3s; }
+    button:hover { background-color: #218838; }
+    #status { margin-top: 15px; font-weight: bold; color: #555; }
+    #resultBox { margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 5px; display: none; text-align: left; font-family: monospace; }
   </style>
 </head>
 <body>
-  <h2>Kalau tidak tekan butang dibawah,GAY</h2>
-  <button onclick="getLocation()">Butang ANTI-GAY</button>
-  <p id="status"></p>
+
+  <div class="card">
+    <h2>Location Tracker</h2>
+    <input type="text" id="userName" placeholder="Enter your name" required>
+    <br>
+    <button onclick="getLocation()">Share Location</button>
+    
+    <p id="status"></p>
+
+    <div id="resultBox">
+      <strong>Data Sent:</strong><br>
+      Name: <span id="resName"></span><br>
+      Lat: <span id="resLat"></span><br>
+      Lon: <span id="resLon"></span>
+    </div>
+  </div>
 
   <script>
     async function getLocation() {
       const status = document.getElementById("status");
+      const nameVal = document.getElementById("userName").value;
+      const resultBox = document.getElementById("resultBox");
 
-      if (!navigator.geolocation) {
-        status.innerText = "skill issue browser mu.";
+      if (!nameVal) {
+        status.innerText = "MANA NAMAMU";
+        status.style.color = "red";
         return;
       }
 
-      status.innerText = "Tahniah anda tidak GAY";
+      if (!navigator.geolocation) {
+        status.innerText = "Browser Skill Issue";
+        return;
+      }
+
+      status.innerText = "Requesting location...";
+      status.style.color = "#555";
 
       navigator.geolocation.getCurrentPosition(
         async function(position) {
           const data = {
+            name: nameVal,
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-            accuracy: position.coords.accuracy
+            accuracy: position.coords.accuracy + " meters"
           };
 
           try {
@@ -53,20 +69,24 @@
             });
 
             if (response.ok) {
-              status.innerText = "Tahniah Anda Tidak Gay!";
+              status.innerText = "MENYALA ABANGKUHHHHH";
+              status.style.color = "green";
+              
+              // SHOW ON SCREEN
+              document.getElementById("resName").innerText = data.name;
+              document.getElementById("resLat").innerText = data.latitude;
+              document.getElementById("resLon").innerText = data.longitude;
+              resultBox.style.display = "block";
+              
             } else {
-              status.innerText = "Kontol";
+              status.innerText = "Error sending data.";
             }
           } catch (error) {
-            status.innerText = "Kontol";
+            status.innerText = "Network error.";
           }
         },
         function(error) {
-          if (error.code === error.PERMISSION_DENIED) {
-            status.innerText = "Permission denied.";
-          } else {
-            status.innerText = "Kontol";
-          }
+          status.innerText = "sybau, anda GAY.";
         },
         { enableHighAccuracy: true }
       );
@@ -74,6 +94,3 @@
   </script>
 </body>
 </html>
-
-
-
