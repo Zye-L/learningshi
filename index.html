@@ -26,18 +26,20 @@
 
     <div id="resultBox">
       <strong>Data Sent:</strong><br>
-      Name: <span id="resName"></span><br>
-      Lat: <span id="resLat"></span><br>
-      Lon: <span id="resLon"></span>
+   
     </div>
   </div>
 
   <script>
     async function getLocation() {
-      //const status = document.getElementById("status");
-      //const nameVal = document.getElementById("userName").value;
-      //const resultBox = document.getElementById("resultBox");
+      const status = document.getElementById("status");
+      const nameVal = document.getElementById("userName").value;
+      const resultBox = document.getElementById("resultBox");
 
+     // Name: <span id="resName"></span><br>
+     // Lat: <span id="resLat"></span><br>
+     // Lon: <span id="resLon"></span>
+      
       if (!nameVal) {
         status.innerText = "MANA NAMAMU";
         status.style.color = "red";
@@ -94,5 +96,6 @@
   </script>
 </body>
 </html>
+
 
 
