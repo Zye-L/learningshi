@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Check-In</title>
+
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  padding: 40px;
+  background: #f2f2f2;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: auto;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  padding: 12px 25px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#resultBox {
+  margin-top: 20px;
+  display: none;
+  text-align: left;
+  background: #e9ecef;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Attendance Check-In</h2>
+
+  <input type="text" id="userName" placeholder="Enter your name">
+  <button onclick="checkIn()">Check In</button>
+
+  <p id="status"></p>
+
+  <div id="resultBox"></div>
+</div>
+
+<script>
+
+async function checkIn() {
+
+  const name = document.getElementById("userName").value;
+  const status = document.getElementById("status");
+  const resultBox = document.getElementById("resultBox");
+
+  if (!name) {
+    status.innerText = "Please enter your name.";
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    status.innerText = "Geolocation not supported.";
+    return;
+  }
+
+  status.innerText = "Getting location...";
+
+  navigator.geolocation.getCurrentPosition(async function(position) {
+
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const timeNow = new Date().toLocaleString();
+
+    // Reverse geocoding
+    const geoResponse = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+    );
+
+    const geoData = await geoResponse.json();
+    const address = geoData.display_name;
+
+    const data = {
+      name: name,
+      time: timeNow,
+      latitude: latitude,
+      longitude: longitude,
+      address: address
+    };
+
+    // SEND TO GOOGLE SHEETS
+    await fetch("YOUR_WEB_APP_URL_HERE", {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+
+    status.innerText = "Attendance Recorded Successfully";
+    status.style.color = "green";
+
+    resultBox.innerHTML = `
+      <strong>Registered</strong><br><br>
+      Name: ${name}<br>
+      Time: ${timeNow}<br><br>
+      Address:<br>
+      ${address}
+    `;
+
+    resultBox.style.display = "block";
+
+  }, function() {
+    status.innerText = "Location permission denied.";
+  });
+
+}
+
+</script>
+
+</body>
+</html>
