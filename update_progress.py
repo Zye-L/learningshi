@@ -30,7 +30,7 @@ def run_countdown():
     # Progress bar for the message
     bar = f"[{'█' * int(percent / 5)}{'░' * (20 - int(percent / 5))}] {percent:.2f}%"
     
-    # Send Telegram Notification
+    # Send Telegram Notification.
     notification = (
         f"📢 *Industrial Training Update*\n\n"
         f"{bar}\n\n"
