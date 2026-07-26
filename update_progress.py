@@ -3,8 +3,8 @@ import os
 import requests
 
 # Configuration
-END_DATE = datetime.datetime(2026, 5, 29)
-START_DATE = datetime.datetime(2026, 1, 14)
+END_DATE = datetime.datetime(2026, 9, 20)
+START_DATE = datetime.datetime(2026, 7, 26)
 
 def send_telegram_message(message):
     token = os.getenv('TELEGRAM_TOKEN')
@@ -32,9 +32,9 @@ def run_countdown():
     
     # Send Telegram Notification.
     notification = (
-        f"📢 *Industrial Training Update*\n\n"
+        f"📢 *Habis Kerja Rahhhhhh🗣️ Update*\n\n"
         f"{bar}\n\n"
-        f"Only *{days_left} days* left until May 29, 2026! 🚀"
+        f"Only *{days_left} days* left until September 20, 2026! 🚀"
     )
     send_telegram_message(notification)
 
