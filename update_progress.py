@@ -4,7 +4,7 @@ import requests
 
 # Configuration
 END_DATE = datetime.datetime(2026, 9, 20)
-START_DATE = datetime.datetime(2026, 7, 26)
+START_DATE = datetime.datetime(2026, 7, 25)
 
 def send_telegram_message(message):
     token = os.getenv('TELEGRAM_TOKEN')
